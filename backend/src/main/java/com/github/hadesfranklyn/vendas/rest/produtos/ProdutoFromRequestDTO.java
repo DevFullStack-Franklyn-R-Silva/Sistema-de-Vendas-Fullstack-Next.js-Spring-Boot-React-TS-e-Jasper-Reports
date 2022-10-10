@@ -1,15 +1,15 @@
-package com.github.hadesfranklyn.vendas.dto;
+package com.github.hadesfranklyn.vendas.rest.produtos;
 
 import java.math.BigDecimal;
 
-public class ProdutoDTO {
+public class ProdutoFromRequestDTO {
 
 	private String descricao;
 	private String nome;
 	private BigDecimal preco;
 	private String sku;
 
-	public ProdutoDTO() {
+	public ProdutoFromRequestDTO() {
 		super();
 	}
 

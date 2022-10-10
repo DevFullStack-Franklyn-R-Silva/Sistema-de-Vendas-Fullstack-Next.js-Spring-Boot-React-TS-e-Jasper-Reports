@@ -27,6 +27,19 @@ public class Produto {
 	@Column
 	private String sku;
 
+	// construtores
+	public Produto() {
+		super();
+	}
+
+	public Produto( String nome, String descricao, BigDecimal preco, String sku) {
+		super();
+		this.nome = nome;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.sku = sku;
+	}
+
 	// get e set
 	public Long getId() {
 		return id;
