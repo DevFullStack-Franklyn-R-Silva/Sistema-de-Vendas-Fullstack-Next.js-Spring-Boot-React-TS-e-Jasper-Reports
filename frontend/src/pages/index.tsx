@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { Layout } from "components";
 
 export default function Home() {
     return (
@@ -8,8 +9,8 @@ export default function Home() {
                 <meta name="description" content="Sistema de Vendas" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <button className="button">Bem Vindo!</button>
-            
+
+            <Layout />
         </div>
     );
 }
