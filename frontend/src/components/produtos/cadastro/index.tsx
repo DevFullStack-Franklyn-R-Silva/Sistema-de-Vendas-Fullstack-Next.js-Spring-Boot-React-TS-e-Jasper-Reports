@@ -1,6 +1,22 @@
+import { useState } from "react";
 import { Layout } from "components/layout";
 
 export const CadastroProdutos: React.FC = () => {
+    const [sku, setSku] = useState<string>("");
+    const [preco, setPreco] = useState<string>("");
+    const [nome, setNome] = useState<string>("");
+    const [descricao, setDescricao] = useState<string>("");
+
+    const submit = () => {
+        const produto = {
+            sku,
+            preco,
+            nome,
+            descricao,
+        };
+        console.log(produto);
+    };
+
     return (
         <Layout titulo="Produtos">
             <div className="columns">
@@ -12,6 +28,8 @@ export const CadastroProdutos: React.FC = () => {
                         <input
                             className="input"
                             id="inputSku"
+                            value={sku}
+                            onChange={(event) => setSku(event.target.value)}
                             placeholder="Digite o SKU do produto"
                         />
                     </div>
@@ -25,6 +43,8 @@ export const CadastroProdutos: React.FC = () => {
                         <input
                             className="input"
                             id="inputPreco"
+                            value={preco}
+                            onChange={(event) => setPreco(event.target.value)}
                             placeholder="Digite o Preço do produto"
                         />
                     </div>
@@ -40,6 +60,8 @@ export const CadastroProdutos: React.FC = () => {
                         <input
                             className="input"
                             id="inputNome"
+                            value={nome}
+                            onChange={(event) => setNome(event.target.value)}
                             placeholder="Digite o Nome do produto"
                         />
                     </div>
@@ -55,6 +77,10 @@ export const CadastroProdutos: React.FC = () => {
                         <textarea
                             className="textarea"
                             id="inputDescricao"
+                            value={descricao}
+                            onChange={(event) =>
+                                setDescricao(event.target.value)
+                            }
                             placeholder="Digite o Descrição detalhada do produto"
                         />
                     </div>
@@ -63,7 +89,7 @@ export const CadastroProdutos: React.FC = () => {
 
             <div className="field is-grouped">
                 <div className="control">
-                    <button className="button is-link">Salvar</button>
+                    <button className="button is-link" onClick={submit}>Salvar</button>
                 </div>
                 <div className="control">
                     <button className="button is-link is-light">Voltar</button>
