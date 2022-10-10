@@ -4,6 +4,8 @@ import { useProdutoService } from "app/services";
 import { Produto } from "app/models/produtos";
 
 export const CadastroProdutos: React.FC = () => {
+    const [id, setId] = useState<string>();
+    const [cadastro, setCadastro] = useState<string>();
     const service = useProdutoService();
     const [sku, setSku] = useState<string>("");
     const [preco, setPreco] = useState<string>("");
@@ -18,13 +20,34 @@ export const CadastroProdutos: React.FC = () => {
             descricao,
         };
 
-        service
-            .salvar(produto)
-            .then((produtoResposta) => console.log(produtoResposta));
+        service.salvar(produto).then((produtoResposta) => {
+            setId(produtoResposta.id);
+            setCadastro(produtoResposta.cadastro);
+        });
     };
 
     return (
         <Layout titulo="Produtos">
+            {id &&
+                <div className="columns">
+                    <Input
+                        label="Código:"
+                        columnClasses="is-half"
+                        value={id}
+                        id="inputId"
+                        disabled={true}
+                    />
+
+                    <Input
+                        label="Data do Cadastro:"
+                        columnClasses="is-half"
+                        value={cadastro}
+                        id="inputDataCadastro"
+                        disabled={true}
+                    />
+                </div>
+            }
+
             <div className="columns">
                 <Input
                     label="SKU: *"
