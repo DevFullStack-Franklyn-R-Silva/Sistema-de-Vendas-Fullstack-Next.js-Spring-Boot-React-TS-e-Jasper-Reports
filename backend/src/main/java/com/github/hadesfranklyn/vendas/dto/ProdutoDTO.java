@@ -45,4 +45,19 @@ public class ProdutoDTO {
 		this.sku = sku;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ProdutoDTO [descricao=");
+		builder.append(descricao);
+		builder.append(", nome=");
+		builder.append(nome);
+		builder.append(", preco=");
+		builder.append(preco);
+		builder.append(", sku=");
+		builder.append(sku);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }
