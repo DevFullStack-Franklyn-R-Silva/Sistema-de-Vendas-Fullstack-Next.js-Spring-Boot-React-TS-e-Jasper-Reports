@@ -21,14 +21,10 @@ public class ProdutoController {
 	@PostMapping
 	public ProdutoFromRequestDTO salvar(@RequestBody ProdutoFromRequestDTO produtoDTO) {
 
-		Produto entidadeProduto = new Produto(
-				produtoDTO.getNome(), 
-				produtoDTO.getDescricao(), 
-				produtoDTO.getPreco(),
-				produtoDTO.getDescricao());
-		
+		Produto entidadeProduto = produtoDTO.toModel();
+
 		repository.save(entidadeProduto);
-		System.out.println(produtoDTO);
-		return produtoDTO;
+
+		return ProdutoFromRequestDTO.fromModel(entidadeProduto);
 	}
 }

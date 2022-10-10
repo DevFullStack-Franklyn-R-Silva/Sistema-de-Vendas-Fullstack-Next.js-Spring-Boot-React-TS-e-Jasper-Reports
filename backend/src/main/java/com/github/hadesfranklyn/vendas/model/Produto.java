@@ -1,12 +1,14 @@
 package com.github.hadesfranklyn.vendas.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 
 @Entity
 public class Produto {
@@ -27,13 +29,31 @@ public class Produto {
 	@Column
 	private String sku;
 
+	@Column(name = "data_cadastro")
+	private LocalDate dataCadastro;
+
+	// Metodos
+	@PrePersist
+	public void prePersist() {
+		setDataCadastro(LocalDate.now());
+	}
+
 	// construtores
 	public Produto() {
 		super();
 	}
 
-	public Produto( String nome, String descricao, BigDecimal preco, String sku) {
+	public Produto(String nome, String descricao, BigDecimal preco, String sku) {
 		super();
+		this.nome = nome;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.sku = sku;
+	}
+
+	public Produto(Long id, String nome, String descricao, BigDecimal preco, String sku) {
+		super();
+		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.preco = preco;
@@ -81,6 +101,14 @@ public class Produto {
 		this.sku = sku;
 	}
 
+	public LocalDate getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(LocalDate dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
 	// to string
 	@Override
 	public String toString() {
@@ -95,6 +123,8 @@ public class Produto {
 		builder.append(preco);
 		builder.append(", sku=");
 		builder.append(sku);
+		builder.append(", dataCadastro=");
+		builder.append(dataCadastro);
 		builder.append("]");
 		return builder.toString();
 	}
