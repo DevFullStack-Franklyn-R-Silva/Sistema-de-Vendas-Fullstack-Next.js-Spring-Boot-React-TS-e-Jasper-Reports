@@ -1,7 +1,9 @@
 ## Bibliotecas adicionadas no projeto
 
-```Bulma
+```bibliotecas
 yarn add bulma@0.9.2 
+
+yarn add axios
 ```
 
 ---
