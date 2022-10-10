@@ -28,7 +28,7 @@ export const CadastroProdutos: React.FC = () => {
 
     return (
         <Layout titulo="Produtos">
-            {id &&
+            {id && (
                 <div className="columns">
                     <Input
                         label="Código:"
@@ -46,7 +46,7 @@ export const CadastroProdutos: React.FC = () => {
                         disabled={true}
                     />
                 </div>
-            }
+            )}
 
             <div className="columns">
                 <Input
@@ -101,7 +101,7 @@ export const CadastroProdutos: React.FC = () => {
             <div className="field is-grouped">
                 <div className="control">
                     <button className="button is-link" onClick={submit}>
-                        Salvar
+                        {id ? "Atualizar" : "Salvar"}
                     </button>
                 </div>
                 <div className="control">
