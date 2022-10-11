@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Layout, Input } from "components";
+import { Layout, Input, Message } from "components";
 import { useProdutoService } from "app/services";
 import { Produto } from "app/models/produtos";
-import { converterEmBigDecimal } from 'app/util/money'
+import { converterEmBigDecimal } from "app/util/money";
 
 export const CadastroProdutos: React.FC = () => {
     const [id, setId] = useState<string>();
@@ -36,6 +36,7 @@ export const CadastroProdutos: React.FC = () => {
 
     return (
         <Layout titulo="Produtos">
+            <Message texto="Produto atualizado com sucesso!" tipo="success" />
             {id && (
                 <div className="columns">
                     <Input
