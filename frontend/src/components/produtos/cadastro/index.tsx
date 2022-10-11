@@ -11,9 +11,23 @@ const msgCampoObrigatorio = "Campo Obrigatório";
 const validationSchema = yup.object().shape({
     sku: yup.string().trim().required(msgCampoObrigatorio),
     nome: yup.string().trim().required(msgCampoObrigatorio),
-    descricao: yup.string().trim().required(msgCampoObrigatorio).min(10,"Deve possuir pelo menos 10 caracteres."),
-    preco: yup.number().required(msgCampoObrigatorio).moreThan(0, "Valor deve ser maior que 0,00 Zero"),
+    descricao: yup
+        .string()
+        .trim()
+        .required(msgCampoObrigatorio)
+        .min(10, "Deve possuir pelo menos 10 caracteres."),
+    preco: yup
+        .number()
+        .required(msgCampoObrigatorio)
+        .moreThan(0, "Valor deve ser maior que 0,00 Zero"),
 });
+
+interface FormErrors {
+    sku?: string;
+    nome?: string;
+    preco?: string;
+    descricao?: string;
+}
 
 export const CadastroProdutos: React.FC = () => {
     const [id, setId] = useState<string>();
@@ -24,6 +38,7 @@ export const CadastroProdutos: React.FC = () => {
     const [nome, setNome] = useState<string>("");
     const [descricao, setDescricao] = useState<string>("");
     const [messages, setMessages] = useState<Array<Alert>>([]);
+    const [errors, setErrors] = useState<FormErrors>({});
 
     const submit = () => {
         const produto: Produto = {
@@ -37,6 +52,7 @@ export const CadastroProdutos: React.FC = () => {
         validationSchema
             .validate(produto)
             .then((obj) => {
+                setErrors({});
                 if (id) {
                     service.atualizar(produto).then((response) => {
                         setMessages([
@@ -63,13 +79,10 @@ export const CadastroProdutos: React.FC = () => {
                 const field = error.path;
                 const message = error.message;
 
-                setMessages([
-                    {
-                        tipo: "danger",
-                        field,
-                        texto: message,
-                    },
-                ]);
+                setErrors({
+                    [field]: message,
+                });
+
                 // console.log(JSON.parse(JSON.stringify(error)));
             });
     };
@@ -104,6 +117,7 @@ export const CadastroProdutos: React.FC = () => {
                     value={sku}
                     id="inputSku"
                     placeholder="Digite o SKU do produto"
+                    error={errors.sku}
                 />
 
                 <Input
@@ -115,6 +129,7 @@ export const CadastroProdutos: React.FC = () => {
                     placeholder="Digite o Preço do produto"
                     currency={true}
                     maxLength={16}
+                    error={errors.preco}
                 />
             </div>
 
@@ -126,6 +141,7 @@ export const CadastroProdutos: React.FC = () => {
                     value={nome}
                     id="inputNome"
                     placeholder="Digite o Nome do produto"
+                    error={errors.nome}
                 />
             </div>
 
@@ -144,6 +160,9 @@ export const CadastroProdutos: React.FC = () => {
                             }
                             placeholder="Digite o Descrição detalhada do produto"
                         />
+                        {errors.descricao && (
+                            <p className="help is-danger">{errors.descricao}</p>
+                        )}
                     </div>
                 </div>
             </div>
