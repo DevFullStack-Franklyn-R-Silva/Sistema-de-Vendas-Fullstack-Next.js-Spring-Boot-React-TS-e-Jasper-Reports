@@ -30,6 +30,19 @@ public class ProdutoController {
 	public List<ProdutoFromRequestDTO> getLista() {
 		return repository.findAll().stream().map(ProdutoFromRequestDTO::fromModel).collect(Collectors.toList());
 	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity<ProdutoFromRequestDTO> getById(@PathVariable Long id) {
+		Optional<Produto> produtoExistente =  repository.findById(id);
+		
+		if (produtoExistente.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		var produto = produtoExistente.map(ProdutoFromRequestDTO::fromModel).get();
+		return ResponseEntity.ok(produto);
+		
+	}
 
 	@PostMapping
 	public ProdutoFromRequestDTO salvar(@RequestBody ProdutoFromRequestDTO produtoDTO) {
