@@ -12,14 +12,27 @@ export const ListagemProdutos: React.FC = () => {
         (url) => httpClient.get(url)
     );
 
+    const editar = (produto: Produto) => {
+        console.log(produto);
+    };
+
+    const deletar = (produto: Produto) => {
+        console.log(produto);
+    };
+
     return (
         <Layout titulo="Produtos">
             <Link href="/cadastros/produtos">
                 <button className="button is-warning">Novo</button>
             </Link>
             <br />
+            <br />
             <Loader show={!result} />
-            <TabelaProdutos produtos={result?.data || []} />
+            <TabelaProdutos
+                onEdit={editar}
+                onDelete={deletar}
+                produtos={result?.data || []}
+            />
         </Layout>
     );
 };
