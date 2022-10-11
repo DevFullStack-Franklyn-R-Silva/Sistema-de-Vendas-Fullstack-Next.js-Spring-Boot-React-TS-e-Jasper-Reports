@@ -6,12 +6,24 @@ import { Produto } from "app/models/produtos";
 import useSWR from "swr";
 import { httpClient } from "app/http";
 import { AxiosResponse } from "axios";
+import { useProdutoService } from "app/services";
+import { Alert } from "components/common/message";
+import { useState, useEffect } from "react";
 
 export const ListagemProdutos: React.FC = () => {
+    const service = useProdutoService();
+    const [messages, setMessages] = useState<Array<Alert>>([]);
+
     const { data: result, error } = useSWR<AxiosResponse<Produto[]>>(
         "/api/produtos",
         (url) => httpClient.get(url)
     );
+
+    const [lista, setLista] = useState<Produto[]>([]);
+
+    useEffect(() => {
+        setLista(result?.data || []);
+    }, [result]);
 
     const editar = (produto: Produto) => {
         const url = `/cadastros/produtos?id=${produto.id}`;
@@ -19,11 +31,22 @@ export const ListagemProdutos: React.FC = () => {
     };
 
     const deletar = (produto: Produto) => {
-        console.log(produto);
+        service.deletar(produto.id).then((response) => {
+            setMessages([
+                {
+                    tipo: "success",
+                    texto: "Produto excluido com sucesso!",
+                },
+            ]);
+            const listaAlterada: Produto[] = lista?.filter(
+                (p) => produto.id !== produto.id
+            );
+            setLista(listaAlterada);
+        });
     };
 
     return (
-        <Layout titulo="Produtos">
+        <Layout titulo="Produtos" mensagens={messages}>
             <Link href="/cadastros/produtos">
                 <button className="button is-warning">Novo</button>
             </Link>
@@ -33,7 +56,7 @@ export const ListagemProdutos: React.FC = () => {
             <TabelaProdutos
                 onEdit={editar}
                 onDelete={deletar}
-                produtos={result?.data || []}
+                produtos={lista}
             />
         </Layout>
     );
