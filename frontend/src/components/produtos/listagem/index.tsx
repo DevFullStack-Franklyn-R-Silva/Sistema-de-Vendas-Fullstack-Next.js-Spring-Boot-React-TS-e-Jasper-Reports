@@ -1,4 +1,4 @@
-import { Layout } from "components";
+import { Layout, Loader } from "components";
 import Link from "next/link";
 import { TabelaProdutos } from "./tabela";
 import { Produto } from "app/models/produtos";
@@ -11,9 +11,6 @@ export const ListagemProdutos: React.FC = () => {
         "/api/produtos",
         (url) => httpClient.get(url)
     );
-    if (!result) {
-        return <div>carregando...</div>;
-    }
 
     return (
         <Layout titulo="Produtos">
@@ -21,7 +18,8 @@ export const ListagemProdutos: React.FC = () => {
                 <button className="button is-warning">Novo</button>
             </Link>
             <br />
-            <TabelaProdutos produtos={result.data} />
+            <Loader show={!result} />
+            <TabelaProdutos produtos={result?.data || []} />
         </Layout>
     );
 };

@@ -28,6 +28,12 @@ public class ProdutoController {
 
 	@GetMapping
 	public List<ProdutoFromRequestDTO> getLista() {
+		//Simular o carregamento
+//		try {
+//			Thread.sleep(5000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		return repository.findAll().stream().map(ProdutoFromRequestDTO::fromModel).collect(Collectors.toList());
 	}
 
