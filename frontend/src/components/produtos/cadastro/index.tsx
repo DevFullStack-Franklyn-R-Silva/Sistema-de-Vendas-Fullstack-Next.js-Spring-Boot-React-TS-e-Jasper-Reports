@@ -56,8 +56,8 @@ export const CadastroProdutos: React.FC = () => {
                 setCadastro(produtoEncontrado.cadastro || ``);
             });
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [queryId]);
+    
+    }, [queryId, service]);
 
     const submit = () => {
         const produto: Produto = {

@@ -33,13 +33,10 @@ export const ListagemProdutos: React.FC = () => {
     const deletar = (produto: Produto) => {
         service.deletar(produto.id).then((response) => {
             setMessages([
-                {
-                    tipo: "success",
-                    texto: "Produto excluido com sucesso!",
-                },
+                { tipo: "success", texto: "Produto excluido com sucesso!" },
             ]);
             const listaAlterada: Produto[] = lista?.filter(
-                (p) => produto.id !== produto.id
+                (p) => p.id !== produto.id
             );
             setLista(listaAlterada);
         });
