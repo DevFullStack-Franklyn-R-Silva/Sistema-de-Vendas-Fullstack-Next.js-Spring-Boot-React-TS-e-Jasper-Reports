@@ -1,5 +1,6 @@
 import { Layout, Loader } from "components";
 import Link from "next/link";
+import Router from "next/router";
 import { TabelaProdutos } from "./tabela";
 import { Produto } from "app/models/produtos";
 import useSWR from "swr";
@@ -13,7 +14,8 @@ export const ListagemProdutos: React.FC = () => {
     );
 
     const editar = (produto: Produto) => {
-        console.log(produto);
+        const url = `/cadastros/produtos?id=${produto.id}`;
+        Router.push(url);
     };
 
     const deletar = (produto: Produto) => {
