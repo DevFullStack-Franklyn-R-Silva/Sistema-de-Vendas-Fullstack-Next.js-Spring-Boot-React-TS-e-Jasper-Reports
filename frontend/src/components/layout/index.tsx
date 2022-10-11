@@ -27,10 +27,8 @@ export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
                                 <div className="content">
                                     {props.mensagens &&
                                         props.mensagens.map((msg) => (
-                                            // eslint-disable-next-line react/jsx-key
-                                            <Message {...msg} />
+                                            <Message key={msg.texto} {...msg} />
                                         ))}
-
                                     {props.children}
                                 </div>
                             </div>

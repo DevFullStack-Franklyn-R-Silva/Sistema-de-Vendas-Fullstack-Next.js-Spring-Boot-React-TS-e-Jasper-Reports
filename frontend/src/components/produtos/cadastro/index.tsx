@@ -4,6 +4,14 @@ import { useProdutoService } from "app/services";
 import { Produto } from "app/models/produtos";
 import { converterEmBigDecimal } from "app/util/money";
 import { Alert } from "components/common/message";
+import * as yup from "yup";
+
+const validationSchema = yup.object().shape({
+    sku: yup.string().required(),
+    nome: yup.string().required(),
+    descricao: yup.string().required(),
+    preco: yup.number().required(),
+});
 
 export const CadastroProdutos: React.FC = () => {
     const [id, setId] = useState<string>();
@@ -24,27 +32,44 @@ export const CadastroProdutos: React.FC = () => {
             descricao,
         };
 
-        if (id) {
-            service.atualizar(produto).then((response) => {
+        validationSchema
+            .validate(produto)
+            .then((obj) => {
+                if (id) {
+                    service.atualizar(produto).then((response) => {
+                        setMessages([
+                            {
+                                tipo: "success",
+                                texto: "Produto atualizado com sucesso!",
+                            },
+                        ]);
+                    });
+                } else {
+                    service.salvar(produto).then((produtoResposta) => {
+                        setId(produtoResposta.id);
+                        setCadastro(produtoResposta.cadastro);
+                        setMessages([
+                            {
+                                tipo: "success",
+                                texto: "Produto Salvo com sucesso!",
+                            },
+                        ]);
+                    });
+                }
+            })
+            .catch((error) => {
+                const field = error.path;
+                const message = error.message;
+
                 setMessages([
                     {
-                        tipo: "success",
-                        texto: "Produto atualizado com sucesso!",
+                        tipo: "danger",
+                        field,
+                        texto: message,
                     },
                 ]);
+                // console.log(JSON.parse(JSON.stringify(error)));
             });
-        } else {
-            service.salvar(produto).then((produtoResposta) => {
-                setId(produtoResposta.id);
-                setCadastro(produtoResposta.cadastro);
-                setMessages([
-                    {
-                        tipo: "success",
-                        texto: "Produto Salvo com sucesso!",
-                    },
-                ]);
-            });
-        }
     };
 
     return (

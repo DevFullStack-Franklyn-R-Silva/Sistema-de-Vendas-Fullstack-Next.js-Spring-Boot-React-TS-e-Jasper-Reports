@@ -18,7 +18,7 @@ export const Message: React.FC<MessageProps> = ({
     return (
         <article className={`message is-${tipo}`}>
             <div className="message-body">
-                {field && `${field} : `}
+                {field && `${field}: `}
                 {texto}
             </div>
         </article>

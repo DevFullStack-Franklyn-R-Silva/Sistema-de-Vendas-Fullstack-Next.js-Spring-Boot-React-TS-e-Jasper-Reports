@@ -6,6 +6,12 @@ yarn add bulma@0.9.2
 yarn add axios
 ```
 
+```
+https://github.com/jquense/yup
+
+yarn add yup
+```
+
 ---
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
