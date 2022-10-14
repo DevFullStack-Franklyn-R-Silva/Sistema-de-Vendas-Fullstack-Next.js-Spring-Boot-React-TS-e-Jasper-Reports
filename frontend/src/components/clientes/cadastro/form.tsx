@@ -12,7 +12,7 @@ interface ClienteFormProps {
 const formScheme: Cliente = {
     cadastro: "",
     cpf: "",
-    dataNascimento: "01/01/2021",
+    dataNascimento: "",
     email: "",
     endereco: "",
     id: "",
