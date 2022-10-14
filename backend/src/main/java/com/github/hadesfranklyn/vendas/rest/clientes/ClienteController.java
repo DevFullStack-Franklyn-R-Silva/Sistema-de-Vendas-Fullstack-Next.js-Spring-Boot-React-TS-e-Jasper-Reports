@@ -1,10 +1,14 @@
 package com.github.hadesfranklyn.vendas.rest.clientes;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,7 +28,7 @@ public class ClienteController {
 	private ClienteRepository repository;
 
 	@PostMapping
-	public ResponseEntity salvar(@RequestBody ClienteFormRequestDTO request) {
+	public ResponseEntity<ClienteFormRequestDTO> salvar(@RequestBody ClienteFormRequestDTO request) {
 		Cliente cliente = request.toModel();
 		repository.save(cliente);
 		return ResponseEntity.ok(ClienteFormRequestDTO.fromModel(cliente));
@@ -42,5 +46,33 @@ public class ClienteController {
 		cliente.setId(id);
 		repository.save(cliente);
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("{id}")
+	public ResponseEntity<ClienteFormRequestDTO> getById(@PathVariable Long id) {
+		return repository.findById(id)
+				.map(ClienteFormRequestDTO::fromModel)
+				.map(clienteFR -> ResponseEntity.ok(clienteFR))
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
+	
+	@DeleteMapping("{id}")
+	public ResponseEntity<Object> delete(@PathVariable Long id) {
+		return repository
+				.findById(id)
+				.map(cliente -> {
+					repository.delete(cliente);
+					return ResponseEntity.noContent().build();
+				})
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
+	
+	@GetMapping
+	public List<ClienteFormRequestDTO> getLista(){
+		return repository
+				.findAll()
+				.stream()
+				.map(ClienteFormRequestDTO::fromModel)
+				.collect(Collectors.toList());
 	}
 }
