@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.hadesfranklyn.vendas.model.Produto;
 
-public class ProdutoFromRequestDTO {
+public class ProdutoFormRequestDTO {
 
 	private Long id;
 	private String descricao;
@@ -22,8 +22,8 @@ public class ProdutoFromRequestDTO {
 		return new Produto(id, nome, descricao, preco, sku);
 	}
 
-	public static ProdutoFromRequestDTO fromModel(Produto produto) {
-		return new ProdutoFromRequestDTO(
+	public static ProdutoFormRequestDTO fromModel(Produto produto) {
+		return new ProdutoFormRequestDTO(
 				produto.getId(), 
 				produto.getDescricao(), 
 				produto.getNome(), 
@@ -33,11 +33,11 @@ public class ProdutoFromRequestDTO {
 	}
 
 	// Construtores
-	public ProdutoFromRequestDTO() {
+	public ProdutoFormRequestDTO() {
 		super();
 	}
 
-	public ProdutoFromRequestDTO(Long id, String descricao, String nome, BigDecimal preco, String sku,
+	public ProdutoFormRequestDTO(Long id, String descricao, String nome, BigDecimal preco, String sku,
 			LocalDate cadastro) {
 		super();
 		this.id = id;

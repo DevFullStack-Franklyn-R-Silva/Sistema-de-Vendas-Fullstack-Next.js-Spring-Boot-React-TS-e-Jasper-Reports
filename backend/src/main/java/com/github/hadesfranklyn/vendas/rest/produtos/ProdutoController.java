@@ -28,35 +28,35 @@ public class ProdutoController {
 	private ProdutoRepository repository;
 
 	@GetMapping
-	public List<ProdutoFromRequestDTO> getLista() {
-		return repository.findAll().stream().map(ProdutoFromRequestDTO::fromModel).collect(Collectors.toList());
+	public List<ProdutoFormRequestDTO> getLista() {
+		return repository.findAll().stream().map(ProdutoFormRequestDTO::fromModel).collect(Collectors.toList());
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<ProdutoFromRequestDTO> getById(@PathVariable Long id) {
+	public ResponseEntity<ProdutoFormRequestDTO> getById(@PathVariable Long id) {
 		Optional<Produto> produtoExistente =  repository.findById(id);
 		
 		if (produtoExistente.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		var produto = produtoExistente.map(ProdutoFromRequestDTO::fromModel).get();
+		var produto = produtoExistente.map(ProdutoFormRequestDTO::fromModel).get();
 		return ResponseEntity.ok(produto);
 		
 	}
 
 	@PostMapping
-	public ProdutoFromRequestDTO salvar(@RequestBody ProdutoFromRequestDTO produtoDTO) {
+	public ProdutoFormRequestDTO salvar(@RequestBody ProdutoFormRequestDTO produtoDTO) {
 
 		Produto entidadeProduto = produtoDTO.toModel();
 
 		repository.save(entidadeProduto);
 
-		return ProdutoFromRequestDTO.fromModel(entidadeProduto);
+		return ProdutoFormRequestDTO.fromModel(entidadeProduto);
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<Void> atualizar(@PathVariable Long id, @RequestBody ProdutoFromRequestDTO produtoDTO) {
+	public ResponseEntity<Void> atualizar(@PathVariable Long id, @RequestBody ProdutoFormRequestDTO produtoDTO) {
 		Optional<Produto> produtoExistente = repository.findById(id);
 
 		if (produtoExistente.isEmpty()) {
