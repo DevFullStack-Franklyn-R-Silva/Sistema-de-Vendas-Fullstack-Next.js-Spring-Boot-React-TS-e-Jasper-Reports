@@ -1,5 +1,10 @@
 import { Produto } from "app/models/produtos";
-import { useState } from "react";
+import { Button } from "primereact/button";
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
+import React, { useRef, useState } from "react";
+import { Toast } from "primereact/toast";
 
 interface TabelaProdutosProps {
     produtos: Array<Produto>;
@@ -9,90 +14,82 @@ interface TabelaProdutosProps {
 
 export const TabelaProdutos: React.FC<TabelaProdutosProps> = ({
     produtos,
-    onEdit,
     onDelete,
+    onEdit,
 }: TabelaProdutosProps) => {
-    return (
-        <table className="table is-striped is-hoverable">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>SKU</th>
-                    <th>Nome</th>
-                    <th>Preço</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {produtos.map((produto) => (
-                    <ProdutoRow
-                        onDelete={onDelete}
-                        onEdit={onEdit}
-                        key={produto.id}
-                        produto={produto}
+    const actionTemplate = (registro: Produto) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [visible, setVisible] = useState<boolean>(false);
+
+        const url = `/cadastros/produtos?id=${registro.id}`;
+
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const toast = useRef(null);
+
+        const accept = () => {
+            //@ts-ignore
+            toast.current.show({
+                severity: "info",
+                summary: "Mensagem",
+                detail: "Produto DELETADO com sucesso!",
+                life: 10000,
+            });
+            onDelete(registro);
+        };
+
+        const reject = () => {
+            //@ts-ignore
+            toast.current.show({
+                severity: "warn",
+                summary: "Mensagem",
+                detail: "Produto NÃO Deletado!",
+                life: 10000,
+            });
+        };
+
+        const confirmacaoDeletar = (event: { currentTarget: any }) => {
+            confirmPopup({
+                target: event.currentTarget,
+                message: "Confirma a exclusão deste registro?",
+                icon: "pi pi-info-circle",
+                acceptClassName: "p-button-danger",
+                acceptLabel: "Sim",
+                rejectLabel: "Não",
+                accept,
+                reject,
+            });
+        };
+
+        return (
+            <div className="field is-grouped">
+                <Toast ref={toast} />
+
+                <ConfirmPopup />
+                <div className="control">
+                    <Button
+                        onClick={(e) => onEdit(registro)}
+                        label="Editar"
+                        className="p-button-rounded p-button-info"
                     />
-                ))}
-            </tbody>
-        </table>
-    );
-};
-
-interface ProdutoRowProps {
-    produto: Produto;
-    onEdit: (produto: Produto) => void;
-    onDelete: (produto: Produto) => void;
-}
-
-const ProdutoRow: React.FC<ProdutoRowProps> = ({
-    produto,
-    onEdit,
-    onDelete,
-}: ProdutoRowProps) => {
-    const [ deletando, setDeletando ] = useState<boolean>(false)
-
-    const onDeleteClick = (produto: Produto) => {
-        if(deletando){
-            onDelete(produto)
-            setDeletando(false)
-        }else{
-            setDeletando(true)
-        }
-    }
-
-    const cancelaDelete = () => setDeletando(false)
+                </div>
+                <div className="control">
+                    <Button
+                        onClick={confirmacaoDeletar}
+                        label="Delete"
+                        className="p-button-rounded p-button-danger"
+                    />
+                </div>
+            </div>
+        );
+    };
 
     return (
-        <tr>
-            <td>{produto.id}</td>
-            <td>{produto.sku}</td>
-            <td>{produto.nome}</td>
-            <td>{produto.preco}</td>
-            <td>
-                {!deletando && (
-                    <button
-                        onClick={(e) => onEdit(produto)}
-                        className="button is-success is-rounded is-small"
-                    >
-                        Editar
-                    </button>
-                )}
-
-                <button
-                    onClick={(e) => onDeleteClick(produto)}
-                    className="button is-danger is-rounded is-small"
-                >
-                    { deletando ? "Confirmar?":"Deletar"}
-                </button>
-
-                {deletando && (
-                    <button
-                        onClick={cancelaDelete}
-                        className="button is-rounded is-small"
-                    >
-                        Cancelar
-                    </button>
-                )}
-            </td>
-        </tr>
+        <DataTable value={produtos} paginator rows={5}>
+            <Column field="id" header="Código" />
+            <Column field="sku" header="SKU" />
+            <Column field="nome" header="Nome" />
+            <Column field="preco" header="Preço" />
+            <Column body={actionTemplate} />
+        </DataTable>
     );
 };

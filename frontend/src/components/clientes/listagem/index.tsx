@@ -6,9 +6,10 @@ import { useFormik } from "formik";
 import Router from "next/router";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
-import { confirmDialog } from "primereact/confirmdialog";
+import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
 import { DataTable, DataTablePageParams } from "primereact/datatable";
-import { useState } from "react";
+import { Toast } from "primereact/toast";
+import { useRef, useState } from "react";
 
 interface ConsultaClientesForm {
     nome?: string;
@@ -22,7 +23,7 @@ export const ListagemClientes: React.FC = () => {
         content: [],
         first: 0,
         number: 0,
-        size: 5,
+        size: 10,
         totalElements: 0,
     });
 
@@ -59,10 +60,51 @@ export const ListagemClientes: React.FC = () => {
     };
 
     const actionTemplate = (registro: Cliente) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [visible, setVisible] = useState<boolean>(false);
+
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const toast = useRef(null);
         const url = `/cadastros/clientes?id=${registro.id}`;
+
+        const accept = () => {
+            //@ts-ignore
+            toast.current.show({
+                severity: "info",
+                summary: "Mensagem",
+                detail: "Cliente DELETADO com sucesso!",
+                life: 10000,
+            });
+            deletar(registro);
+        };
+
+        const reject = () => {
+            //@ts-ignore
+            toast.current.show({
+                severity: "warn",
+                summary: "Mensagem",
+                detail: "Cliente NÃO Deletado!",
+                life: 15000,
+            });
+        };
+
+        const confirmacaoDeletar = (event: { currentTarget: any }) => {
+            confirmPopup({
+                target: event.currentTarget,
+                message: "Confirma a exclusão deste registro?",
+                icon: "pi pi-info-circle",
+                acceptClassName: "p-button-danger",
+                acceptLabel: "Sim",
+                rejectLabel: "Não",
+                accept,
+                reject,
+            });
+        };
 
         return (
             <div>
+                <Toast ref={toast} />
+                <ConfirmPopup />
                 <Button
                     label="Editar"
                     className="p-button-rounded p-button-info"
@@ -70,16 +112,7 @@ export const ListagemClientes: React.FC = () => {
                 />
                 <Button
                     label="Deletar"
-                    onClick={(event) => {
-                        confirmDialog({
-                            message: "Confirma a exclusão deste registro?",
-                            acceptLabel: "Sim",
-                            rejectLabel: "Não",
-                            
-                            accept: () => deletar(registro),
-                            header: "Confirmação",
-                        });
-                    }}
+                    onClick={confirmacaoDeletar}
                     className="p-button-rounded p-button-danger"
                 />
             </div>
