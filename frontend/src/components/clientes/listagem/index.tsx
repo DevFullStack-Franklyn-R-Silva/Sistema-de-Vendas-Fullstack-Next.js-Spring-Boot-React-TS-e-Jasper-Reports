@@ -51,7 +51,7 @@ export const ListagemClientes: React.FC = () => {
     };
 
     const deletar = (cliente: Cliente) => {
-        console.log(cliente.id)
+        console.log(cliente.id);
         service.deletar(cliente.id).then((result) => {
             //@ts-ignore
             handlePage(null);
@@ -60,6 +60,7 @@ export const ListagemClientes: React.FC = () => {
 
     const actionTemplate = (registro: Cliente) => {
         const url = `/cadastros/clientes?id=${registro.id}`;
+
         return (
             <div>
                 <Button
@@ -74,6 +75,7 @@ export const ListagemClientes: React.FC = () => {
                             message: "Confirma a exclusão deste registro?",
                             acceptLabel: "Sim",
                             rejectLabel: "Não",
+                            
                             accept: () => deletar(registro),
                             header: "Confirmação",
                         });
@@ -110,7 +112,7 @@ export const ListagemClientes: React.FC = () => {
 
                 <div className="field is-grouped">
                     <div className="control is-link">
-                        <button type="submit" className="button is-success">
+                        <button type="submit" className="button is-link">
                             Consultar
                         </button>
                     </div>
@@ -118,7 +120,7 @@ export const ListagemClientes: React.FC = () => {
                         <button
                             type="submit"
                             onClick={(e) => Router.push("/cadastros/clientes")}
-                            className="button is-warning"
+                            className="button is-success"
                         >
                             Novo
                         </button>
