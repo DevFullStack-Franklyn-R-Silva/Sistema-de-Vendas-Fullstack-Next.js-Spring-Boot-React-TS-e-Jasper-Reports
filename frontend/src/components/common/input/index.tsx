@@ -1,5 +1,8 @@
-import { ChangeEvent, ChangeEventHandler, InputHTMLAttributes } from "react";
+import { InputHTMLAttributes } from "react";
 import { formatReal } from "app/util/money";
+import { FormatUtils } from "@4us-dev/utils";
+
+const formatUtils = new FormatUtils();
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     id: string;
@@ -50,4 +53,27 @@ export const Input: React.FC<InputProps> = ({
 
 export const InputMoney: React.FC<InputProps> = (props: InputProps) => {
     return <Input {...props} formatter={formatReal} />;
+};
+
+export const InputCPF: React.FC<InputProps> = (props: InputProps) => {
+    return <Input {...props} formatter={formatUtils.formatCPF} />;
+};
+
+export const InputTelefone: React.FC<InputProps> = (props: InputProps) => {
+    return <Input {...props} formatter={formatUtils.formatPhone} />;
+};
+
+export const InputDate: React.FC<InputProps> = (props: InputProps) => {
+    const formatData = (value: string) => {
+        if (!value) {
+            return "";
+        }
+        return value
+            .replace(/\D/g, "")
+            .replace(/(\d{2})(\d)/, "$1/$2")
+            .replace(/(\d{2})(\d)/, "$1/$2")
+            .replace(/(\d{4})(\d)/, "$1");
+    };
+
+    return <Input {...props} maxLength={10} formatter={formatData} />;
 };

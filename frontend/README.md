@@ -28,6 +28,10 @@ https://formik.org/docs/overview
 yarn add formik
 ```
 
+```bibliotecas
+yarn add @4us-dev/utils@0.0.11
+```
+
 ---
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
