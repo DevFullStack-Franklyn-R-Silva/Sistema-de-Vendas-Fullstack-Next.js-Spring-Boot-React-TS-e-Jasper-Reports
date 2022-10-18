@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 
 @Entity
 public class Cliente {
@@ -25,7 +26,13 @@ public class Cliente {
 	@Column(name = "data_cadastro")
 	private LocalDate dataCadastro;
 
-	//Construtores
+	// metodos
+	@PrePersist
+	public void prePersist() {
+		setDataCadastro(LocalDate.now());
+	}
+
+	// Construtores
 	public Cliente() {
 		super();
 	}
@@ -42,8 +49,8 @@ public class Cliente {
 		this.email = email;
 		this.dataCadastro = dataCadastro;
 	}
-	
-	//Construtor sem ID e Data_cadastro
+
+	// Construtor sem ID e Data_cadastro
 	public Cliente(LocalDate nascimento, String cpf, String nome, String endereco, String telefone, String email) {
 		super();
 		this.nascimento = nascimento;
