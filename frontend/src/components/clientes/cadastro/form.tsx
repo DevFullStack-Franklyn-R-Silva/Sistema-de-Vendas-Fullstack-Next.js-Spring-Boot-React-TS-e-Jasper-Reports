@@ -29,6 +29,7 @@ export const ClienteForm: React.FC<ClienteFormProps> = ({
         onSubmit,
     });
 
+
     return (
         <form onSubmit={formik.handleSubmit}>
             {formik.values.id && (
@@ -124,13 +125,6 @@ export const ClienteForm: React.FC<ClienteFormProps> = ({
                         {formik.values.id ? "Atualizar" : "Salvar"}
                     </button>
                 </div>
-                {/* <div className="control">
-                    <Link href="/consultas/produtos">
-                        <button className="button is-link is-light">
-                            Voltar
-                        </button>
-                    </Link>
-                </div> */}
             </div>
         </form>
     );

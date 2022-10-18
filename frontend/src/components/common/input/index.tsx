@@ -1,27 +1,32 @@
-import { InputHTMLAttributes } from "react";
+import { ChangeEvent, ChangeEventHandler, InputHTMLAttributes } from "react";
 import { formatReal } from "app/util/money";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     id: string;
     label: string;
     columnClasses?: string;
-    currency?: boolean;
     error?: string;
+    formatter?: (value: string) => string;
 }
 
 export const Input: React.FC<InputProps> = ({
     label,
     columnClasses,
     id,
-    currency,
     error,
+    formatter,
+    onChange,
     ...inputProps
 }: InputProps) => {
     const onInputChange = (event: any) => {
-        let value = event.target.value;
+        const value = event.target.value;
+        const name = event.target.name;
 
-        if (value && currency) {
-            value = formatReal(value);
+        const formattedValue =
+            (formatter && formatter(value as string)) || value;
+
+        if (onChange !== undefined) {
+            onChange({ ...event, target: { name, value: formattedValue } });
         }
     };
 
@@ -33,12 +38,16 @@ export const Input: React.FC<InputProps> = ({
             <div className="control">
                 <input
                     className="input"
+                    onChange={onInputChange}
                     id={id}
                     {...inputProps}
-                    
                 />
                 {error && <p className="help is-danger">{error}</p>}
             </div>
         </div>
     );
+};
+
+export const InputMoney: React.FC<InputProps> = (props: InputProps) => {
+    return <Input {...props} formatter={formatReal} />;
 };
