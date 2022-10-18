@@ -38,6 +38,8 @@ foi usado @6.4.0 no curso, mas eu usei a mais atual
 https://www.primefaces.org/primereact/
 
 yarn add primereact primeicons
+
+yarn add react-transition-group
 ```
 
 ---

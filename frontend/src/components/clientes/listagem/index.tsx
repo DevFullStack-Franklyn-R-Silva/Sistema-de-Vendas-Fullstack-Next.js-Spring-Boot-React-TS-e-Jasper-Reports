@@ -26,6 +26,7 @@ export const ListagemClientes: React.FC = () => {
     });
 
     const handleSubmit = (filtro: ConsultaClientesForm) => {
+        // @ts-ignore
         handlePage(null);
     };
 
