@@ -1,5 +1,6 @@
-import { Input, Layout } from "components";
+import { Input, InputCPF, Layout } from "components";
 import { useFormik } from "formik";
+import { Button } from "primereact/button";
 
 interface ConsultaClientesForm {
     nome?: string;
@@ -22,6 +23,7 @@ export const ListagemClientes: React.FC = () => {
 
     return (
         <Layout titulo="Clientes">
+            <Button label="Teste"/>
             <form onSubmit={formikSubmit}>
                 <div className="columns">
                     <Input
@@ -33,7 +35,7 @@ export const ListagemClientes: React.FC = () => {
                         onChange={handleChange}
                         autoComplete="off"
                     />
-                    <Input
+                    <InputCPF
                         label="CPF"
                         id="cpf"
                         name="cpf"

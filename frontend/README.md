@@ -32,6 +32,14 @@ yarn add formik
 yarn add @4us-dev/utils@0.0.11
 ```
 
+foi usado @6.4.0 no curso, mas eu usei a mais atual
+
+```
+https://www.primefaces.org/primereact/
+
+yarn add primereact primeicons
+```
+
 ---
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).

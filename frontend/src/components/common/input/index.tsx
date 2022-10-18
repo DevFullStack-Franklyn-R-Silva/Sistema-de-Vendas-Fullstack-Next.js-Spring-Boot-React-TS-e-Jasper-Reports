@@ -68,6 +68,7 @@ export const InputDate: React.FC<InputProps> = (props: InputProps) => {
         if (!value) {
             return "";
         }
+        // https://valchan.com.br/mask-input/
         return value
             .replace(/\D/g, "")
             .replace(/(\d{2})(\d)/, "$1/$2")
