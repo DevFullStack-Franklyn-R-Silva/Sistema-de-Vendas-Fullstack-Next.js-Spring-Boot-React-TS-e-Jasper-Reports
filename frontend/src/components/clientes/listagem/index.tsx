@@ -3,7 +3,10 @@ import { Page } from "app/models/common/page";
 import { useClienteService } from "app/services";
 import { Input, InputCPF, Layout } from "components";
 import { useFormik } from "formik";
+import Router from "next/router";
+import { Button } from "primereact/button";
 import { Column } from "primereact/column";
+import { confirmDialog } from "primereact/confirmdialog";
 import { DataTable, DataTablePageParams } from "primereact/datatable";
 import { useState } from "react";
 
@@ -14,19 +17,17 @@ interface ConsultaClientesForm {
 
 export const ListagemClientes: React.FC = () => {
     const service = useClienteService();
-
     const [loading, setLoading] = useState<boolean>(false);
-
     const [clientes, setClientes] = useState<Page<Cliente>>({
         content: [],
         first: 0,
         number: 0,
-        size: 0,
+        size: 5,
         totalElements: 0,
     });
 
     const handleSubmit = (filtro: ConsultaClientesForm) => {
-        // @ts-ignore
+        //@ts-ignore
         handlePage(null);
     };
 
@@ -49,6 +50,40 @@ export const ListagemClientes: React.FC = () => {
             .finally(() => setLoading(false));
     };
 
+    const deletar = (cliente: Cliente) => {
+        console.log(cliente.id)
+        service.deletar(cliente.id).then((result) => {
+            //@ts-ignore
+            handlePage(null);
+        });
+    };
+
+    const actionTemplate = (registro: Cliente) => {
+        const url = `/cadastros/clientes?id=${registro.id}`;
+        return (
+            <div>
+                <Button
+                    label="Editar"
+                    className="p-button-rounded p-button-info"
+                    onClick={(e) => Router.push(url)}
+                />
+                <Button
+                    label="Deletar"
+                    onClick={(event) => {
+                        confirmDialog({
+                            message: "Confirma a exclusão deste registro?",
+                            acceptLabel: "Sim",
+                            rejectLabel: "Não",
+                            accept: () => deletar(registro),
+                            header: "Confirmação",
+                        });
+                    }}
+                    className="p-button-rounded p-button-danger"
+                />
+            </div>
+        );
+    };
+
     return (
         <Layout titulo="Clientes">
             <form onSubmit={formikSubmit}>
@@ -56,37 +91,50 @@ export const ListagemClientes: React.FC = () => {
                     <Input
                         label="Nome"
                         id="nome"
+                        columnClasses="is-half"
+                        autoComplete="off"
+                        onChange={handleChange}
                         name="nome"
                         value={filtro.nome}
-                        columnClasses="is-half"
-                        onChange={handleChange}
-                        autoComplete="off"
                     />
+
                     <InputCPF
                         label="CPF"
                         id="cpf"
-                        name="cpf"
-                        value={filtro.cpf}
                         columnClasses="is-half"
                         onChange={handleChange}
+                        name="cpf"
+                        value={filtro.cpf}
                     />
                 </div>
+
                 <div className="field is-grouped">
-                    <div className="control">
-                        <button className="button is-link" type="submit">
+                    <div className="control is-link">
+                        <button type="submit" className="button is-success">
                             Consultar
+                        </button>
+                    </div>
+                    <div className="control is-link">
+                        <button
+                            type="submit"
+                            onClick={(e) => Router.push("/cadastros/clientes")}
+                            className="button is-warning"
+                        >
+                            Novo
                         </button>
                     </div>
                 </div>
             </form>
+
             <br />
+
             <div className="columns">
                 <div className="is-full">
                     <DataTable
                         value={clientes.content}
                         totalRecords={clientes.totalElements}
-                        lazy={true}
-                        paginator={true}
+                        lazy
+                        paginator
                         first={clientes.first}
                         rows={clientes.size}
                         onPage={handlePage}
@@ -97,6 +145,7 @@ export const ListagemClientes: React.FC = () => {
                         <Column field="nome" header="Nome" />
                         <Column field="cpf" header="CPF" />
                         <Column field="email" header="Email" />
+                        <Column body={actionTemplate} />
                     </DataTable>
                 </div>
             </div>

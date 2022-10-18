@@ -1,7 +1,7 @@
 import { httpClient } from "app/http";
 import { Cliente } from "app/models/clientes";
-import { Page } from "app/models/common/page";
 import { AxiosResponse } from "axios";
+import { Page } from "app/models/common/page";
 
 const resourceURL: string = "/api/clientes";
 
@@ -34,7 +34,7 @@ export const useClienteService = () => {
         nome: string = "",
         cpf: string = "",
         page: number = 0,
-        size: number = 10
+        size: number = 5
     ): Promise<Page<Cliente>> => {
         const url = `${resourceURL}?nome=${nome}&cpf=${cpf}&page=${page}&size=${size}`;
         const response: AxiosResponse<Page<Cliente>> = await httpClient.get(

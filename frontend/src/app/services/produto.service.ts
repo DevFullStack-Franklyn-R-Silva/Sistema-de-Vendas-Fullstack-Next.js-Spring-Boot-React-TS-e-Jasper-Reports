@@ -23,10 +23,10 @@ export const useProdutoService = () => {
         return response.data;
     };
 
-    const deletar = async (id: any): Promise<void> => { 
+    const deletar = async (id: any): Promise<void> => {
         const url: string = `${resourceURL}/${id}`;
         await httpClient.delete(url);
-    }
+    };
 
     return {
         salvar,
