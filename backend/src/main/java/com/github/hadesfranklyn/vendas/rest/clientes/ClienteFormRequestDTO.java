@@ -2,6 +2,7 @@ package com.github.hadesfranklyn.vendas.rest.clientes;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.hadesfranklyn.vendas.model.Cliente;
 
 public class ClienteFormRequestDTO {
@@ -9,10 +10,15 @@ public class ClienteFormRequestDTO {
 	private Long id;
 	private String nome;
 	private String cpf;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;
+	
 	private String endereco;
 	private String email;
 	private String telefone;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate cadastro;
 
 	// Metodos
