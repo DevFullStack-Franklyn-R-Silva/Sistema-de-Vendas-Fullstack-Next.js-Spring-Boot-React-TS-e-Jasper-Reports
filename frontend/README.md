@@ -40,6 +40,9 @@ https://www.primefaces.org/primereact/
 yarn add primereact primeicons
 
 yarn add react-transition-group
+
+https://github.com/primefaces/primeflex/wiki/PrimeFlex-v2
+yarn add primeflex
 ```
 
 ---

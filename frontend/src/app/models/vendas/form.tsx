@@ -1,5 +1,6 @@
 import { Venda } from "app/models/vendas";
 import { useFormik } from "formik";
+import { AutoComplete } from "primereact/autocomplete";
 
 interface VendasFormProps {
     onSubmit: (venda: Venda) => void;
@@ -18,5 +19,14 @@ export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
         initialValues: formScheme,
     });
 
-    return <form onSubmit={formik.handleSubmit}></form>;
+    return (
+        <form onSubmit={formik.handleSubmit}>
+            <div className="p-fluid">
+                <div className="p-field">
+                    <label htmlFor="cliente">Cliente: *</label>
+                    <AutoComplete id="cliente" name="cliente" />
+                </div>
+            </div>
+        </form>
+    );
 };
