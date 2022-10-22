@@ -1,6 +1,6 @@
 import { Venda } from "app/models/vendas";
-import { VendasForm } from "app/models/vendas/form";
-import { Layout } from "components"
+import { Layout } from "components";
+import { VendasForm } from "components/vendas/form";
 
 export const Vendas: React.FC = () => {
     const handleSubmit = (venda: Venda) => { 
