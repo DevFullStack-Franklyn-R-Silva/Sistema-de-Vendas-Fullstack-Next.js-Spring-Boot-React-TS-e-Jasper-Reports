@@ -26,7 +26,7 @@ public class Produto {
 	@Column(name = "preco", precision = 16, scale = 2)
 	private BigDecimal preco;
 
-	@Column
+	@Column(name = "sku")
 	private String sku;
 
 	@Column(name = "data_cadastro")

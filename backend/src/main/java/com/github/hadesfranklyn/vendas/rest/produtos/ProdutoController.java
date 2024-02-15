@@ -57,18 +57,26 @@ public class ProdutoController {
 
 	@PutMapping("{id}")
 	public ResponseEntity<Void> atualizar(@PathVariable Long id, @RequestBody ProdutoFormRequestDTO produtoDTO) {
-		Optional<Produto> produtoExistente = repository.findById(id);
+	    Optional<Produto> produtoExistenteOptional = repository.findById(id);
 
-		if (produtoExistente.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
+	    if (produtoExistenteOptional.isEmpty()) {
+	        return ResponseEntity.notFound().build();
+	    }
 
-		Produto entidade = produtoDTO.toModel();
-		entidade.setId(id);
-		repository.save(entidade);
+	    Produto produtoExistente = produtoExistenteOptional.get();
+	    
+	    // Atualizar apenas os campos necessários
+	    produtoExistente.setNome(produtoDTO.getNome());
+	    produtoExistente.setDescricao(produtoDTO.getDescricao());
+	    produtoExistente.setPreco(produtoDTO.getPreco());
+	    produtoExistente.setSku(produtoDTO.getSku());
 
-		return ResponseEntity.ok().build();
+	    // Salvar a entidade atualizada
+	    repository.save(produtoExistente);
+
+	    return ResponseEntity.ok().build();
 	}
+
 	
 	@DeleteMapping("{id}")
 	public ResponseEntity<Void> deletar( @PathVariable Long id ){

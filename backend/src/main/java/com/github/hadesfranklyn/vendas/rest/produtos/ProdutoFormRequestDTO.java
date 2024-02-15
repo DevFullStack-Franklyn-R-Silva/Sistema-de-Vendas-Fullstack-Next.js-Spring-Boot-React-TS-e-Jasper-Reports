@@ -19,8 +19,11 @@ public class ProdutoFormRequestDTO {
 
 	// Metodos
 	public Produto toModel() {
-		return new Produto(id, nome, descricao, preco, sku);
+	    Produto produto = new Produto(id, nome, descricao, preco, sku);
+	    produto.setDataCadastro(cadastro != null ? cadastro : produto.getDataCadastro());
+	    return produto;
 	}
+
 
 	public static ProdutoFormRequestDTO fromModel(Produto produto) {
 		return new ProdutoFormRequestDTO(
