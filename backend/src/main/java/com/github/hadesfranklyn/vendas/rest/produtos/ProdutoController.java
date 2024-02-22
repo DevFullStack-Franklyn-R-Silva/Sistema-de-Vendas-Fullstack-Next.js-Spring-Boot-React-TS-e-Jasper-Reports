@@ -49,7 +49,6 @@ public class ProdutoController {
 	public ProdutoFormRequestDTO salvar(@RequestBody ProdutoFormRequestDTO produtoDTO) {
 
 		Produto entidadeProduto = produtoDTO.toModel();
-
 		repository.save(entidadeProduto);
 
 		return ProdutoFormRequestDTO.fromModel(entidadeProduto);

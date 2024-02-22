@@ -1,83 +1,104 @@
-## Bibliotecas adicionadas no projeto
+## Bibliotecas Adicionadas ao Projeto
 
-```bibliotecas
-yarn add bulma@0.9.2 
+### Bulma
 
+```bash
+yarn add bulma@0.9.2
+```
+
+Bulma é um moderno framework CSS baseado em Flexbox. Ele fornece uma estrutura simples e flexível para estilizar suas aplicações web.
+
+### Axios
+
+```bash
 yarn add axios
 ```
 
-```
-https://github.com/jquense/yup
+Axios é um cliente HTTP baseado em promessas que simplifica o processo de fazer requisições a APIs e lidar com as respostas em sua aplicação.
 
+### Yup
+
+```bash
 yarn add yup
 ```
 
-```
-https://swr.vercel.app/pt-BR
+Yup é uma biblioteca de validação de esquema em JavaScript que permite definir e validar a estrutura dos seus dados. É comumente usado em validação de formulários.
 
+### SWR (React Hooks para Busca de Dados Remotos)
+
+```bash
 yarn add swr
 ```
 
-```
-https://loading.io/css/
+SWR é uma biblioteca de React Hooks para busca de dados remotos. Ele oferece uma maneira simples e eficiente de lidar com busca de dados, cache e gerenciamento de estado.
+
+### Loading.io (CSS Spinners e Loaders)
+
+```bash
+# Não requer instalação, basta usar o CSS fornecido em seu projeto
 ```
 
-```
-https://formik.org/docs/overview
+Loading.io oferece uma variedade de spinners e loaders em CSS que você pode usar para melhorar a aparência visual de sua aplicação durante processos de carregamento.
 
+### Formik
+
+```bash
 yarn add formik
 ```
 
-```bibliotecas
+Formik é uma biblioteca de gerenciamento de formulários para React. Ela simplifica o processo de construção e manipulação de formulários, incluindo validação de formulários.
+
+### @4us-dev/utils
+
+```bash
 yarn add @4us-dev/utils@0.0.11
 ```
 
-foi usado @6.4.0 no curso, mas eu usei a mais atual
+Funções utilitárias personalizadas fornecidas por @4us-dev, oferecendo ferramentas adicionais para otimizar tarefas de desenvolvimento.
 
+### PrimeReact, PrimeIcons, React-Transition-Group, PrimeFlex
+
+```bash
+yarn add primereact primeicons react-transition-group primeflex
 ```
-https://www.primefaces.org/primereact/
 
-yarn add primereact primeicons
-
-yarn add react-transition-group
-
-https://github.com/primefaces/primeflex/wiki/PrimeFlex-v2
-yarn add primeflex
-```
+PrimeReact é um conjunto rico de componentes UI de código aberto para React. PrimeIcons fornece um conjunto de ícones, React-Transition-Group para animações suaves e PrimeFlex para um sistema de grade responsivo.
 
 ---
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Projeto Next.js
 
-## Getting Started
+Este é um projeto [Next.js](https://nextjs.org/) inicializado com [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-First, run the development server:
+### Iniciando
+
+Primeiro, execute o servidor de desenvolvimento:
 
 ```bash
 npm run dev
-# or
+# ou
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Você pode começar a editar a página modificando `pages/index.tsx`. A página é atualizada automaticamente conforme você edita o arquivo.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Rotas de API podem ser acessadas em [http://localhost:3000/api/hello](http://localhost:3000/api/hello). Este endpoint pode ser editado em `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+O diretório `pages/api` é mapeado para `/api/*`. Arquivos neste diretório são tratados como [rotas de API](https://nextjs.org/docs/api-routes/introduction) em vez de páginas React.
 
-## Learn More
+### Saiba Mais
 
-To learn more about Next.js, take a look at the following resources:
+Para aprender mais sobre o Next.js, confira os seguintes recursos:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Documentação do Next.js](https://nextjs.org/docs) - aprenda sobre recursos e API do Next.js.
+- [Aprenda Next.js](https://nextjs.org/learn) - um tutorial interativo do Next.js.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Você também pode verificar [o repositório do Next.js no GitHub](https://github.com/vercel/next.js/) - seu feedback e contribuições são bem-vindos!
 
-## Deploy on Vercel
+### Implante na Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+A maneira mais fácil de implantar seu aplicativo Next.js é usar a [Plataforma Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) dos criadores do Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Confira nossa [documentação de implantação do Next.js](https://nextjs.org/docs/deployment) para mais detalhes.

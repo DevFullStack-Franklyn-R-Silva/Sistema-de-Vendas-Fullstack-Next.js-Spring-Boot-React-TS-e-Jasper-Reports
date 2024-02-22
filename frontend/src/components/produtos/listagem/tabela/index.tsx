@@ -7,89 +7,89 @@ import React, { useRef, useState } from "react";
 import { Toast } from "primereact/toast";
 
 interface TabelaProdutosProps {
-    produtos: Array<Produto>;
-    onEdit: (produto: Produto) => void;
-    onDelete: (produto: Produto) => void;
+  produtos: Array<Produto>;
+  onEdit: (produto: Produto) => void;
+  onDelete: (produto: Produto) => void;
 }
 
 export const TabelaProdutos: React.FC<TabelaProdutosProps> = ({
-    produtos,
-    onDelete,
-    onEdit,
+  produtos,
+  onDelete,
+  onEdit,
 }: TabelaProdutosProps) => {
-    const actionTemplate = (registro: Produto) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [visible, setVisible] = useState<boolean>(false);
+  const actionTemplate = (registro: Produto) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [visible, setVisible] = useState<boolean>(false);
 
-        const url = `/cadastros/produtos?id=${registro.id}`;
+    const url = `/cadastros/produtos?id=${registro.id}`;
 
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const toast = useRef(null);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const toast = useRef(null);
 
-        const accept = () => {
-            //@ts-ignore
-            toast.current.show({
-                severity: "info",
-                summary: "Mensagem",
-                detail: "Produto DELETADO com sucesso!",
-                life: 10000,
-            });
-            onDelete(registro);
-        };
+    const accept = () => {
+      //@ts-ignore
+      toast.current.show({
+        severity: "info",
+        summary: "Mensagem",
+        detail: "Produto DELETADO com sucesso!",
+        life: 10000,
+      });
+      onDelete(registro);
+    };
 
-        const reject = () => {
-            //@ts-ignore
-            toast.current.show({
-                severity: "warn",
-                summary: "Mensagem",
-                detail: "Produto NÃO Deletado!",
-                life: 10000,
-            });
-        };
+    const reject = () => {
+      //@ts-ignore
+      toast.current.show({
+        severity: "warn",
+        summary: "Mensagem",
+        detail: "Produto NÃO Deletado!",
+        life: 10000,
+      });
+    };
 
-        const confirmacaoDeletar = (event: { currentTarget: any }) => {
-            confirmPopup({
-                target: event.currentTarget,
-                message: "Confirma a exclusão deste registro?",
-                icon: "pi pi-info-circle",
-                acceptClassName: "p-button-danger",
-                acceptLabel: "Sim",
-                rejectLabel: "Não",
-                accept,
-                reject,
-            });
-        };
-
-        return (
-            <div className="field is-grouped">
-                <Toast ref={toast} />
-
-                <ConfirmPopup />
-                <div className="control">
-                    <Button
-                        onClick={(e) => onEdit(registro)}
-                        label="Editar"
-                        className="p-button-rounded p-button-info"
-                    />
-                </div>
-                <div className="control">
-                    <Button
-                        onClick={confirmacaoDeletar}
-                        label="Delete"
-                        className="p-button-rounded p-button-danger"
-                    />
-                </div>
-            </div>
-        );
+    const confirmacaoDeletar = (event: { currentTarget: any }) => {
+      confirmPopup({
+        target: event.currentTarget,
+        message: "Confirma a exclusão deste registro?",
+        icon: "pi pi-info-circle",
+        acceptClassName: "p-button-danger",
+        acceptLabel: "Sim",
+        rejectLabel: "Não",
+        accept,
+        reject,
+      });
     };
 
     return (
-        <DataTable value={produtos} paginator rows={5}>
-            <Column field="id" header="Código" />
-            <Column field="sku" header="SKU" />
-            <Column field="nome" header="Nome" />
-            <Column field="preco" header="Preço" />
-            <Column body={actionTemplate} />
-        </DataTable>
+      <div className="field is-grouped">
+        <Toast ref={toast} />
+
+        <ConfirmPopup />
+        <div className="control">
+          <Button
+            onClick={(e) => onEdit(registro)}
+            label="Editar"
+            className="p-button-rounded p-button-info"
+          />
+        </div>
+        <div className="control">
+          <Button
+            onClick={confirmacaoDeletar}
+            label="Delete"
+            className="p-button-rounded p-button-danger"
+          />
+        </div>
+      </div>
     );
+  };
+
+  return (
+    <DataTable value={produtos} paginator rows={5}>
+      <Column field="id" header="Código" />
+      <Column field="sku" header="SKU" />
+      <Column field="nome" header="Nome" />
+      <Column field="preco" header="Preço" />
+      <Column body={actionTemplate} />
+    </DataTable>
+  );
 };

@@ -8,8 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_cliente")
 public class Cliente {
 
 	@Id
@@ -18,23 +20,23 @@ public class Cliente {
 
 	@Column(name = "data_de_nascimento")
 	private LocalDate nascimento;
-	
+
 	@Column(name = "cpf")
 	private String cpf;
-	
+
 	@Column(name = "nome")
 	private String nome;
-	
+
 	@Column(name = "endereco")
 	private String endereco;
-	
+
 	@Column(name = "telefone")
 	private String telefone;
-	
+
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "data_cadastro")
+	@Column(name = "data_de_cadastro")
 	private LocalDate dataCadastro;
 
 	// metodos
@@ -158,6 +160,31 @@ public class Cliente {
 		builder.append(dataCadastro);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }
