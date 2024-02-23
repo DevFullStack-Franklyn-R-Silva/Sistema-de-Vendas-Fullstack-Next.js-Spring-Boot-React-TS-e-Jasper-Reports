@@ -7,7 +7,7 @@ import "primeicons/primeicons.css"; //icons
 import "/node_modules/primeflex/primeflex.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
-    return <Component {...pageProps} />;
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;

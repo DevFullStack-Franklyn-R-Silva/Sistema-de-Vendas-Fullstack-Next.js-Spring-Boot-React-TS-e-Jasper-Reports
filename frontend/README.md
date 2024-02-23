@@ -62,7 +62,7 @@ Funções utilitárias personalizadas fornecidas por @4us-dev, oferecendo ferram
 yarn add primereact primeicons react-transition-group primeflex
 ```
 
-PrimeReact é um conjunto rico de componentes UI de código aberto para React. PrimeIcons fornece um conjunto de ícones, React-Transition-Group para animações suaves e PrimeFlex para um sistema de grade responsivo.
+PrimeReact é um conjunto rico de componentes UI de código aberto para React. PrimeIcons fornece um conjunto de ícones, React-Transition-Group para animações suaves e PrimeFlex para um sistema de grade responsivo. [primereact](https://primereact.org/)
 
 ---
 
