@@ -1,4 +1,4 @@
-package com.github.hadesfranklyn.vendas.rest.produtos;
+package com.github.hadesfranklyn.vendas.rest.produtos.dto;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.hadesfranklyn.vendas.model.Produto;
 import com.github.hadesfranklyn.vendas.model.repositories.ProdutoRepository;
+import com.github.hadesfranklyn.vendas.rest.produtos.ProdutoFormRequestDTO;
 
 @RestController
 @RequestMapping("/api/produtos")

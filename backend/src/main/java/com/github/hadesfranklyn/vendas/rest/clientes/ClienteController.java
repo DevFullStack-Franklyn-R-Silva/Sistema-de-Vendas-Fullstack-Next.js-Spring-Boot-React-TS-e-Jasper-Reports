@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.hadesfranklyn.vendas.model.Cliente;
 import com.github.hadesfranklyn.vendas.model.repositories.ClienteRepository;
+import com.github.hadesfranklyn.vendas.rest.clientes.dto.ClienteFormRequestDTO;
 
 @RestController
 @RequestMapping("/api/clientes")

@@ -1,4 +1,4 @@
-package com.github.hadesfranklyn.vendas.rest.clientes;
+package com.github.hadesfranklyn.vendas.rest.clientes.dto;
 
 import java.time.LocalDate;
 
