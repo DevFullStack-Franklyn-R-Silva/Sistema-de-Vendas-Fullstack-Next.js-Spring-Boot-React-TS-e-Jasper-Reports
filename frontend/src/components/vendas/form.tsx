@@ -16,6 +16,12 @@ import { Produto } from "app/models/produtos";
 import { Dialog } from "primereact/dialog";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Dropdown } from "primereact/dropdown";
+
+const formatadorMoney = new Intl.NumberFormat("pt-br", {
+  style: "currency",
+  currency: "BRL",
+});
 
 // Definição da interface para as propriedades do componente VendasForm
 interface VendasFormProps {
@@ -32,7 +38,12 @@ const formScheme: Venda = {
 
 // Componente funcional React para o formulário de vendas
 export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
-  // Inicialização de serviços e estados relacionados ao cliente e produto
+  const formasPagamento: String[] = [
+    "DINHEIRO",
+    "PIX",
+    "CARTÃO DE CRÉDITO",
+    "CARTÃO DE DÉBITO",
+  ];
   const clienteService = useClienteService();
   const produtoService = useProdutoService();
   const [listaProdutos, setListaProdutos] = useState<Produto[]>([]);
@@ -107,8 +118,11 @@ export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
     }
 
     setProduto(null!);
-    setCodigoProduto(``);
+    setCodigoProduto("");
     setQuantidadeProduto(0);
+
+    const total = totalVenda();
+    formik.setFieldValue("total", total);
   };
 
   // Função para fechar o dialog quando um produto não é encontrado
@@ -144,6 +158,25 @@ export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
   // Função para desabilitar o botão de adicionar produto
   const disableAddProdutoButton = () => {
     return !produto || !quantidadeProduto;
+  };
+
+  const totalVenda = () => {
+    const totais: number[] | undefined = formik.values.itens?.map(
+      (itemVenda) => {
+        if (itemVenda.produto && itemVenda.produto.preco) {
+          return itemVenda.quantidade * itemVenda.produto.preco;
+        }
+        return 0;
+      }
+    );
+
+    if (totais && totais.length) {
+      return totais.reduce(
+        (somatoriaAtual = 0, valorItemAtual) => somatoriaAtual + valorItemAtual
+      );
+    } else {
+      return 0;
+    }
   };
 
   return (
@@ -207,7 +240,10 @@ export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
             />
           </div>
           <div className="p-col-12">
-            <DataTable value={formik.values.itens}>
+            <DataTable
+              value={formik.values.itens}
+              emptyMessage="Nenhum produto adicionado."
+            >
               <Column field="produto.id" header="Código" />
               <Column field="produto.sku" header="SKU" />
               <Column field="produto.nome" header="Produto" />
@@ -216,12 +252,42 @@ export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
               <Column
                 header="Total"
                 body={(itemVenda: ItemVenda) => {
-                  return (
-                    <div>{itemVenda.produto.preco! * itemVenda.quantidade}</div>
-                  );
+                  const total = itemVenda.produto.preco! * itemVenda.quantidade;
+                  const totalFormatado = formatadorMoney.format(total);
+                  return <div>{totalFormatado}</div>;
                 }}
               />
             </DataTable>
+          </div>
+          <div className="p-col-5">
+            <div className="p-field">
+              <label htmlFor="formaPagamento">Forma de Pagamento: *</label>
+              <Dropdown
+                id="formaPagamento"
+                options={formasPagamento}
+                value={formik.values.formaPagamento}
+                onChange={(e) =>
+                  formik.setFieldValue("formaPagamento", e.value)
+                }
+                placeholder="Selecione..."
+              />
+            </div>
+          </div>
+          <div className="p-col-2">
+            <div className="p-field">
+              <label htmlFor="itens">Itens:</label>
+              <InputText disabled value={formik.values.itens?.length} />
+            </div>
+          </div>
+
+          <div className="p-col-2">
+            <div className="p-field">
+              <label htmlFor="total">Total:</label>
+              <InputText
+                disabled
+                value={formatadorMoney.format(formik.values.total)}
+              />
+            </div>
           </div>
         </div>
         <Button type="submit" label="Finalizar" />
