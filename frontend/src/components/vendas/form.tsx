@@ -17,7 +17,9 @@ import { Dialog } from "primereact/dialog";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Dropdown } from "primereact/dropdown";
+import { validationScheme } from "./validationScheme";
 
+// Definição do formato de moeda
 const formatadorMoney = new Intl.NumberFormat("pt-br", {
   style: "currency",
   currency: "BRL",
@@ -66,6 +68,7 @@ export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
   const formik = useFormik<Venda>({
     onSubmit,
     initialValues: formScheme,
+    validationSchema: validationScheme,
   });
 
   // Função para lidar com a pesquisa automática de clientes ao digitar no campo de autocompletar
@@ -193,6 +196,7 @@ export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
             name="cliente"
             onChange={handleClienteChange}
           />
+          <small className="p-error p-d-block">{formik.errors.cliente}</small>
         </div>
 
         <div className="p-grid">
@@ -258,6 +262,9 @@ export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
                 }}
               />
             </DataTable>
+            <small className="p-error p-d-block">
+              {formik.touched && formik.errors.itens}
+            </small>
           </div>
           <div className="p-col-5">
             <div className="p-field">
@@ -271,6 +278,9 @@ export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
                 }
                 placeholder="Selecione..."
               />
+              <small className="p-error p-d-block">
+                {formik.touched && formik.errors.formaPagamento}
+              </small>
             </div>
           </div>
           <div className="p-col-2">
