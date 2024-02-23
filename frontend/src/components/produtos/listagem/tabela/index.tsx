@@ -17,17 +17,13 @@ export const TabelaProdutos: React.FC<TabelaProdutosProps> = ({
   onDelete,
   onEdit,
 }: TabelaProdutosProps) => {
-  const actionTemplate = (registro: Produto) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [visible, setVisible] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  const toast = useRef<any>(null);
 
+  const actionTemplate = (registro: Produto) => {
     const url = `/cadastros/produtos?id=${registro.id}`;
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const toast = useRef(null);
-
     const accept = () => {
-      //@ts-ignore
       toast.current.show({
         severity: "info",
         summary: "Mensagem",
@@ -38,7 +34,6 @@ export const TabelaProdutos: React.FC<TabelaProdutosProps> = ({
     };
 
     const reject = () => {
-      //@ts-ignore
       toast.current.show({
         severity: "warn",
         summary: "Mensagem",

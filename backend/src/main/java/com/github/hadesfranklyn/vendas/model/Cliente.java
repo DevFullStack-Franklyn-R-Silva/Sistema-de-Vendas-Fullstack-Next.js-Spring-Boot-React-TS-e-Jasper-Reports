@@ -9,6 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "tb_cliente")
@@ -19,21 +26,28 @@ public class Cliente {
 	private Long id;
 
 	@Column(name = "data_de_nascimento")
+	@NotNull(message = "A data de nascimento não pode ser nula")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate nascimento;
 
 	@Column(name = "cpf")
+	 @Length(min = 14, max = 14, message = "CPF deve ter o formato 000.000.000-00")
 	private String cpf;
 
 	@Column(name = "nome")
+	@NotBlank(message = "O nome não pode estar em branco")
 	private String nome;
 
 	@Column(name = "endereco")
+	@NotBlank(message = "O endereço não pode estar em branco")
 	private String endereco;
 
 	@Column(name = "telefone")
+	@Pattern(regexp = "\\(\\d{2}\\)\\d{4,5}-\\d{4}", message = "Formato de telefone inválido. Use (00)1234-5678 ou (00)12345-6789")
 	private String telefone;
 
 	@Column(name = "email")
+	@Email(message = "Por favor, forneça um endereço de e-mail válido")
 	private String email;
 
 	@Column(name = "data_de_cadastro")
