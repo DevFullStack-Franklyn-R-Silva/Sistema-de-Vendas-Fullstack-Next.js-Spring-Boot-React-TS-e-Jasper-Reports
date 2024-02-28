@@ -29,7 +29,8 @@ public class Venda {
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "forma_pagamento")
 	private FormaPagamento formaPagamento;
 
 	@OneToMany(mappedBy = "venda")
