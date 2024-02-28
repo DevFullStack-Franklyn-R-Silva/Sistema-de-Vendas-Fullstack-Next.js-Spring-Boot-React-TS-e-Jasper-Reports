@@ -29,7 +29,7 @@ public class Venda {
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	@Column(name = "forma_pagamento")
 	private FormaPagamento formaPagamento;
 

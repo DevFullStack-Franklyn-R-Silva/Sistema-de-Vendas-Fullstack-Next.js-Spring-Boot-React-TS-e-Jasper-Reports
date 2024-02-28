@@ -28,6 +28,8 @@ const formatadorMoney = new Intl.NumberFormat("pt-br", {
 // Definição da interface para as propriedades do componente VendasForm
 interface VendasFormProps {
   onSubmit: (venda: Venda) => void;
+  onNovaVenda: () => void;
+  vendaRealizada: boolean;
 }
 
 // Definição do esquema inicial para o formulário de vendas
@@ -39,12 +41,16 @@ const formScheme: Venda = {
 };
 
 // Componente funcional React para o formulário de vendas
-export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
+export const VendasForm: React.FC<VendasFormProps> = ({
+  onSubmit,
+  onNovaVenda,
+  vendaRealizada,
+}) => {
   const formasPagamento: String[] = [
     "DINHEIRO",
     "PIX",
-    "CARTÃO DE CRÉDITO",
-    "CARTÃO DE DÉBITO",
+    "CARTAO_DE_CREDITO",
+    "CARTAO_DE_DEBITO",
   ];
   const clienteService = useClienteService();
   const produtoService = useProdutoService();
@@ -182,6 +188,13 @@ export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
     }
   };
 
+  const realizarNovaVenda = () => {
+    onNovaVenda();
+    formik.resetForm();
+    formik.setFieldValue("itens", []);
+    formik.setFieldTouched("itens", false);
+  };
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="p-fluid">
@@ -317,7 +330,15 @@ export const VendasForm: React.FC<VendasFormProps> = ({ onSubmit }) => {
             </div>
           </div>
         </div>
-        <Button type="submit" label="Finalizar" />
+        {!vendaRealizada && <Button type="submit" label="Finalizar" />}
+        {vendaRealizada && (
+          <Button
+            type="button"
+            onClick={realizarNovaVenda}
+            label="Nova Venda"
+            className="p-button-success"
+          />
+        )}
       </div>
       <Dialog
         header="Atenção"

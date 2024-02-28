@@ -8,6 +8,7 @@ import { useState } from "react";
 export const Vendas: React.FC = () => {
   const service = useVendaService();
   const [messages, setMessages] = useState<Alert[]>([]);
+  const [vendaRealizada, setVendaRealizada] = useState<boolean>(false);
 
   const handleSubmit = (venda: Venda) => {
     service
@@ -16,6 +17,7 @@ export const Vendas: React.FC = () => {
         setMessages([
           { texto: "Venda realizado com sucesso!", tipo: "success" },
         ]);
+        setVendaRealizada(true);
       })
       .catch((error) => {
         console.log(error);
@@ -27,9 +29,19 @@ export const Vendas: React.FC = () => {
         ]);
       });
   };
+
+  const handleNovaVenda = () => {
+    setVendaRealizada(false);
+    setMessages([]);
+  };
+
   return (
     <Layout titulo="Vendas" mensagens={messages}>
-      <VendasForm onSubmit={handleSubmit} />
+      <VendasForm
+        onSubmit={handleSubmit}
+        onNovaVenda={handleNovaVenda}
+        vendaRealizada={vendaRealizada}
+      />
     </Layout>
   );
 };
